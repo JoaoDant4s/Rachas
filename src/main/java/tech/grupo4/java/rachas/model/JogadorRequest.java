@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UsuarioRequest {
+public class JogadorRequest {
 
     @Email
     private String email;

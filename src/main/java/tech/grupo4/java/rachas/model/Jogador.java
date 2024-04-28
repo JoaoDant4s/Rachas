@@ -1,26 +1,14 @@
 package tech.grupo4.java.rachas.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import jakarta.persistence.*;
+import lombok.*;
+import java.util.*;
 
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import tech.grupo4.java.rachas.racha.Racha;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,18 +17,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 @ToString
 @Entity
 @SQLRestriction("active = true")
-public class Usuario implements UserDetails{
+public class Jogador implements UserDetails{
 
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private Double avaliacao;
     @Column(unique = true)
     private String username;
     private String password;
+    private double avaliacao;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToMany(mappedBy = "jogadores")
+    private Set<Racha> rachas = new HashSet<>();
+
     private boolean active;
     private boolean accountExpired;
     private boolean accountLocked;

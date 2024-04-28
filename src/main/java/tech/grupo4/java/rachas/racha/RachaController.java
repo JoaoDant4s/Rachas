@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.item;
+package tech.grupo4.java.rachas.racha;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -18,48 +18,54 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/todo-itens")
+@RequestMapping("/rachas")
 @RequiredArgsConstructor
-public class TodoItemController {
+public class RachaController {
 
-    private final TodoItemService service;
+    private final RachaService service;
 
     @GetMapping
-    public List<TodoItemDto> listar() {
+    public List<RachaDto> listar() {
         return this.service.listar();
     }
 
-    @GetMapping(value = "consultar", params = "titulo")
-    public List<TodoItemDto> consultarPorTitulo(@RequestParam String titulo) {
-        return this.service.consultarPorTitulo(titulo);
+    @GetMapping(value = "consultar", params = "Dono")
+    public List<RachaDto> consultarPorDonoDaBola(@RequestParam String Dono) {
+        return this.service.consultarPorDonoDaBola(Dono);
     }
 
     @GetMapping("/{uuid}")
-    public TodoItemDto buscarPorUuid(@PathVariable UUID uuid) {
+    public RachaDto buscarPorUuid(@PathVariable UUID uuid) {
         return this.service.buscarPorUuid(uuid);
     }
 
-    @GetMapping("/usuarios/{username}")
-    public List<TodoItemDto> buscarPorUsuario(@PathVariable String username) {
-        return this.service.buscarPorUsuario(username);
-    }
-
-    @PostMapping("/usuarios/{username}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public TodoItemDto adicionar(@PathVariable String username, @RequestBody TodoItemRequest request) {
-        return this.service.adicionar(username, request);
+    @GetMapping("/esportes/{esporte}")
+    public List<RachaDto> buscarPorEsporte(@PathVariable String esporte) {
+        return this.service.buscarPorEsporte(esporte);
     }
 
     @PutMapping("/{uuid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable UUID uuid, @RequestBody TodoItemUpdateRequest request) {
+    public void atualizar(@PathVariable UUID uuid, @RequestBody RachaUpdateRequest request) {
         this.service.atualizar(uuid, request);
     }
 
     @PatchMapping("/{uuid}/concluido")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void marcarComoConcluido(@PathVariable UUID uuid) {
-        this.service.marcarConcluido(uuid);
+    public void marcarComoIndisponivel(@PathVariable UUID uuid) {
+        this.service.marcarIndisponivel(uuid);
+    }
+
+    @PatchMapping("/{uuid}/jogadores/{username}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void adicionarJogador(@PathVariable UUID uuid, @PathVariable String username) {
+        this.service.atribuirJogador(uuid, username);
+    }
+
+    @PatchMapping("/{uuid}/partidas/{numero}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void adicionarPartida(@PathVariable UUID uuid, @PathVariable int numero) {
+        this.service.atribuirPartida(uuid, numero);
     }
 
     @Transactional
