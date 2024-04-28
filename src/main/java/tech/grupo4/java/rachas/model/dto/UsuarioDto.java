@@ -15,7 +15,8 @@ import tech.grupo4.java.rachas.model.Usuario.Role;
 @Builder
 public class UsuarioDto implements Serializable {
 
-    private String email;
+    private String nome;
+    private Double avaliacao;
     private String username;
     private String password;
     private Role role;
