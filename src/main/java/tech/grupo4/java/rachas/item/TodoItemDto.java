@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tech.grupo4.java.rachas.item.TodoItem.PrioridadeEnum;
-import tech.grupo4.java.rachas.model.usuario.UsuarioDto;
+import tech.grupo4.java.rachas.model.dto.UsuarioDto;
 
 @NoArgsConstructor
 @AllArgsConstructor

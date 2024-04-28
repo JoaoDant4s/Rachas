@@ -1,8 +1,12 @@
-package tech.grupo4.java.rachas.model.usuario;
+package tech.grupo4.java.rachas.controller;
 
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import tech.grupo4.java.rachas.model.UsuarioRequest;
+import tech.grupo4.java.rachas.model.dto.UsuarioDto;
+import tech.grupo4.java.rachas.service.UsuarioService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
-public class UsuarioRestController {
+public class UsuarioController {
 
     private final UsuarioService service;
 

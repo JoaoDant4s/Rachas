@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import tech.grupo4.java.rachas.model.usuario.Usuario;
+import tech.grupo4.java.rachas.model.Usuario;
 
 @NoArgsConstructor
 @AllArgsConstructor
