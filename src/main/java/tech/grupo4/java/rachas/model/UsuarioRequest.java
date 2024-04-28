@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.model.usuario;
+package tech.grupo4.java.rachas.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;

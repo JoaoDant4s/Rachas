@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import tech.grupo4.java.rachas.exception.TodoItemNaoEncontradoException;
 import tech.grupo4.java.rachas.exception.UsuarioNaoEncontradoException;
 import tech.grupo4.java.rachas.item.TodoItem.PrioridadeEnum;
-import tech.grupo4.java.rachas.model.usuario.UsuarioRepository;
+import tech.grupo4.java.rachas.repository.UsuarioRepository;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

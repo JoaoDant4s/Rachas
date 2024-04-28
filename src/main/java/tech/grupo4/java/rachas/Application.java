@@ -26,8 +26,8 @@ public class Application {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        final String securitySchemeName = "basicAuth";
-        final String apiTitle = "To-Do List API";
+        final String securitySchemeName = "Rachas Auth";
+        final String apiTitle = "RachasAPI";
         return new OpenAPI()
             .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
             .components(
@@ -36,8 +36,8 @@ public class Application {
                         new SecurityScheme()
                             .name(securitySchemeName)
                             .type(SecurityScheme.Type.HTTP)
-                            .scheme("basic")
-//                            .bearerFormat("JWT")
+                            .scheme("bearer")
+                            .bearerFormat("JWT")
                     )
             )
             .info(new Info().title(apiTitle).version("0.0.1-SNAPSHOT"));
