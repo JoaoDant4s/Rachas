@@ -25,8 +25,8 @@ public class AuthRestController {
 
     @PostMapping
     public String login(@RequestBody LoginDto request) {
-        Jogador jogador = jogadorService.getByUsernameEntity(request.username());
         Authentication authentication = new UsernamePasswordAuthenticationToken(request.username(), request.password());
+        Jogador jogador = jogadorService.getByUsernameEntity(request.username());
         authenticationManager.authenticate(authentication);
         return jwtService.createToken(jogador);
     }

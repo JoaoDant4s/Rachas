@@ -36,7 +36,7 @@ public class WebSecurityConfig {
                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/usuarios", HttpMethod.POST.name())).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/jogadors", HttpMethod.POST.name())).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/login", HttpMethod.POST.name())).permitAll()
                                 .anyRequest().authenticated()
                 )

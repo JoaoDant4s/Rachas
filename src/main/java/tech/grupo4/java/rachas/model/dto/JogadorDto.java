@@ -17,7 +17,7 @@ public class JogadorDto implements Serializable {
 
     private String nome;
     private String username;
-    private String senha;
+    private String password;
     private double avaliacao;
     private Role role;
     private boolean active;

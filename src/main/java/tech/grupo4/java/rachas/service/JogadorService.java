@@ -14,17 +14,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class JogadorService {
 
     private final JogadorRepository repository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
+
+    public JogadorService(JogadorRepository repository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public List<JogadorDto> listarTodos() {
         return this.repository.findAll().stream()
                 .map(jogador -> this.modelMapper.map(jogador, JogadorDto.class))
-                .toList();
+                .toList()
+                .reversed();
     }
 
     public JogadorDto buscarPorLogin(String username) {
@@ -35,7 +42,9 @@ public class JogadorService {
 
     public JogadorDto adicionarJogador(JogadorRequest request) {
         Jogador jogador = modelMapper.map(request, Jogador.class);
-        jogador.setPassword(passwordEncoder.encode(jogador.getPassword()));
+        String password = this.passwordEncoder.encode(jogador.getPassword());
+        System.out.println(password);
+        jogador.setPassword(password);
         Jogador novoJogador = repository.save(jogador);
         return modelMapper.map(novoJogador, JogadorDto.class);
     }

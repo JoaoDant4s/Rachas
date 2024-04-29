@@ -26,14 +26,14 @@ public class Jogador implements UserDetails{
     @Column(unique = true)
     private String username;
     private String password;
-    private double avaliacao;
+    private double avaliacao = 0.0;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.BASIC;
 
     @ManyToMany(mappedBy = "jogadores")
     private Set<Racha> rachas = new HashSet<>();
 
-    private boolean active;
+    private boolean active = true;
     private boolean accountExpired;
     private boolean accountLocked;
     private boolean credentialsExpired;
