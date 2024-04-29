@@ -16,13 +16,13 @@ public class InMemoryAuthenticationConfig {
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("user")
-            .password(passwordEncoder.encode("userPass"))
-            .roles("USER")
-            .build());
+                .password(passwordEncoder.encode("userPass"))
+                .roles("USER")
+                .build());
         manager.createUser(User.withUsername("admin")
-            .password(passwordEncoder.encode("adminPass"))
-            .roles("USER", "ADMIN")
-            .build());
+                .password(passwordEncoder.encode("adminPass"))
+                .roles("USER", "ADMIN")
+                .build());
         return manager;
     }
 
