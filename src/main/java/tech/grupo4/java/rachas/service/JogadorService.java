@@ -43,7 +43,6 @@ public class JogadorService {
     public JogadorDto adicionarJogador(JogadorRequest request) {
         Jogador jogador = modelMapper.map(request, Jogador.class);
         String password = this.passwordEncoder.encode(jogador.getPassword());
-        System.out.println(password);
         jogador.setPassword(password);
         Jogador novoJogador = repository.save(jogador);
         return modelMapper.map(novoJogador, JogadorDto.class);
