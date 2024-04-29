@@ -28,21 +28,21 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-            .authorizeHttpRequests(auth ->
-                auth.requestMatchers(PathRequest.toH2Console()).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/usuarios", HttpMethod.POST.name())).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/login", HttpMethod.POST.name())).permitAll()
-                    .anyRequest().authenticated()
-            )
-            .authenticationProvider(this.authenticationProvider)
-            .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                .authorizeHttpRequests(auth ->
+                        auth.requestMatchers(PathRequest.toH2Console()).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/jogadors", HttpMethod.POST.name())).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/login", HttpMethod.POST.name())).permitAll()
+                                .anyRequest().authenticated()
+                )
+                .authenticationProvider(this.authenticationProvider)
+                .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
 }

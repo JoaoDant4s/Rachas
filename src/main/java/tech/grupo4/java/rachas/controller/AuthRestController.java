@@ -1,10 +1,10 @@
 package tech.grupo4.java.rachas.controller;
 
 import lombok.RequiredArgsConstructor;
-import tech.grupo4.java.rachas.model.Usuario;
+import tech.grupo4.java.rachas.model.*;
 import tech.grupo4.java.rachas.model.dto.LoginDto;
 import tech.grupo4.java.rachas.service.JwtService;
-import tech.grupo4.java.rachas.service.UsuarioService;
+import tech.grupo4.java.rachas.service.*;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthRestController {
 
-    private final UsuarioService usuarioService;
+    private final JogadorService jogadorService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     @PostMapping
     public String login(@RequestBody LoginDto request) {
-        Usuario usuario = usuarioService.getByUsernameEntity(request.username());
         Authentication authentication = new UsernamePasswordAuthenticationToken(request.username(), request.password());
+        Jogador jogador = jogadorService.getByUsernameEntity(request.username());
         authenticationManager.authenticate(authentication);
-        return jwtService.createToken(usuario);
+        return jwtService.createToken(jogador);
     }
 
 }

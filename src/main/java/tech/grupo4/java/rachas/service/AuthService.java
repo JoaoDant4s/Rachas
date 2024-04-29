@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
 
-    private final UsuarioService usuarioService;
+    private final JogadorService jogadorService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.usuarioService.getByUsernameEntity(username);
+        return this.jogadorService.getByUsernameEntity(username);
     }
 
 }

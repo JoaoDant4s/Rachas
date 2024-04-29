@@ -9,10 +9,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UsuarioRequest {
+public class JogadorRequest {
 
-    @Email
-    private String email;
+    private String nome;
     @Pattern(regexp = "[\\w.]{5,20}", message = "Username deve ser alfanumérico entre 5 e 20 caracteres (lowercase, uppercase, numbers, _, .)")
     private String username;
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
