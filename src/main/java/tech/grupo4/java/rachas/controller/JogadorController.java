@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/jogadors")
+@RequestMapping("/jogadores")
 @RequiredArgsConstructor
 public class JogadorController {
 

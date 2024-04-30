@@ -32,9 +32,9 @@ VALUES ('Tiago Santos', 4.1, 'tiago.santos', '$2a$10$6ASvnj/AxsZGRK.qR/pB8O8k6kj
 INSERT INTO racha (uuid, localizacao, clima, data, quantidade_maxima, quantidade_atual, disponivel, esporte,
                    avaliacao_minima, duracao, dono_da_bola, prioridade)
 VALUES ('123e4567-e89b-12d3-a456-426614174000', 'São Paulo, SP', 'Ensolarado', '2024-04-30', 20, 10, true, 'Futebol', 3,
-        '15h - 17h', 'Carlos Eduardo', 'ALTA'),
-       ('123e4567-e89b-12d3-a456-426614174001', 'Rio de Janeiro, RJ', 'Chuvoso', '2024-05-05', 15, 15, true, 'Vôlei',
-        2, '17h - 19h', 'Maria Fernanda', 'MEDIA');
+        '15h - 17h', 'Maria Silva', 'ALTA'),
+       ('123e4567-e89b-12d3-a456-426614174001', 'Rio de Janeiro, RJ', 'Chuvoso', '2024-05-05', 15, 14, true, 'Vôlei',
+        2, '17h - 19h', 'João Dantas', 'MEDIA');
 
 
 INSERT INTO partida (numero, timeA, timeB, duracao, placar)

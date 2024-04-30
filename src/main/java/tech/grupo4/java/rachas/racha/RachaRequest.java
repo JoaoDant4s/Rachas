@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tech.grupo4.java.rachas.partida.Partida;
-import tech.grupo4.java.rachas.racha.Racha.PrioridadeEnum;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +25,4 @@ public class RachaRequest implements Serializable {
     private int avaliacaoMinima;
     private String duracao;
     private String donoDaBola;
-    private PrioridadeEnum prioridade;
-    private List<String> jogadores;
-    private List<Partida> partidas;
 }

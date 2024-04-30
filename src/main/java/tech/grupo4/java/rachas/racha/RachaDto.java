@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech.grupo4.java.rachas.racha.Racha.PrioridadeEnum;
 import tech.grupo4.java.rachas.model.dto.JogadorDto;
 
 @NoArgsConstructor
@@ -31,7 +30,6 @@ public class RachaDto implements Serializable {
     private int avaliacaoMinima;
     private String duracao;
     private String donoDaBola;
-    private PrioridadeEnum prioridade;
     private List<String> jogadores = new ArrayList<>();
     private List<Integer> partidas = new ArrayList<>();
 }
