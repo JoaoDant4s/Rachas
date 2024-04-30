@@ -92,27 +92,79 @@ public class RachaService {
         return this.modelMapper.map(novoRacha, RachaDto.class);
     }
 
-    public void atualizar(UUID uuid, RachaUpdateRequest request) {
+    public void atualizar(UUID uuid, String username, RachaUpdateRequest request) {
+
         Racha existingRacha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
-        this.modelMapper.map(request, existingRacha);
-        this.repository.save(existingRacha);
+
+        if (verificarDono(uuid, username)){
+            this.modelMapper.map(request, existingRacha);
+            this.repository.save(existingRacha);
+        }
+
+        else
+            throw new PermissaoInvalidaException();
     }
 
     @Transactional
-    public void marcarIndisponivel(UUID uuid) {
-        this.repository.marcarIndisponivel(uuid);
+    public void marcarIndisponivel(UUID uuid, String username) {
+        if (verificarDono(uuid, username))
+            this.repository.marcarIndisponivel(uuid);
+
+        else
+            throw new PermissaoInvalidaException();
     }
 
     @Transactional
     public void excluir(UUID uuid, String username) {
-        Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
-        Jogador jogador = this.jogadorRepository.findByUsername(username).orElseThrow(JogadorNaoEncontradoException::new);
-        if (racha.getDonoDaBola().equals(jogador.getUsername()))
+        if (verificarDono(uuid, username))
             this.repository.deleteByUuid(uuid);
+
+        else
+            throw new PermissaoInvalidaException();
     }
 
-    public void atribuirJogador(UUID uuid, String username) {
+    public void atribuirJogador(UUID uuid, String username2, String username) {
         Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
+
+        if (verificarDono(uuid, username2) && racha.isDisponivel()){
+            novoJogador(username, racha);
+        }
+
+        else
+            throw new PermissaoInvalidaException();
+    }
+
+    public void entrarJogador(UUID uuid, String username) {
+        Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
+
+        if (racha.isDisponivel()){
+            novoJogador(username, racha);
+        }
+    }
+
+    public void atribuirPartida(UUID uuid, String username, int numero) {
+        Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
+
+        if (verificarDono(uuid, username)){
+            Partida partida = this.partidaRepository.findByNumero(numero).orElseThrow(PartidaNaoEncontradoException::new);
+            partida.setRacha(racha);
+            System.out.println(partida);
+            racha.getPartidas().add(partida);
+            System.out.println(racha.getPartidas().stream());
+            this.repository.save(racha);
+        }
+
+        else
+            throw new PermissaoInvalidaException();
+    }
+
+    private boolean verificarDono(UUID uuid, String username){
+        Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
+        Jogador jogador = this.jogadorRepository.findByUsername(username).orElseThrow(JogadorNaoEncontradoException::new);
+        return racha.getDonoDaBola().equals(jogador.getNome());
+    }
+
+    private void novoJogador(String username, Racha racha){
         Jogador jogador = this.jogadorRepository.findByUsername(username).orElseThrow(JogadorNaoEncontradoException::new);
         racha.getJogadores().add(jogador);
         racha.setQuantidadeAtual(racha.getQuantidadeAtual() + 1);
@@ -121,15 +173,4 @@ public class RachaService {
         }
         this.repository.save(racha);
     }
-
-    public void atribuirPartida(UUID uuid, int numero) {
-        Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
-        Partida partida = this.partidaRepository.findByNumero(numero).orElseThrow(PartidaNaoEncontradoException::new);
-        partida.setRacha(racha);
-        System.out.println(partida);
-        racha.getPartidas().add(partida);
-        System.out.println(racha.getPartidas().stream());
-        this.repository.save(racha);
-    }
-
 }

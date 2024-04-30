@@ -39,28 +39,34 @@ public class RachaController {
         return this.service.buscarPorEsporte(esporte);
     }
 
-    @PutMapping("/{uuid}")
+    @PutMapping("/{uuid}/{username}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable UUID uuid, @RequestBody RachaUpdateRequest request) {
-        this.service.atualizar(uuid, request);
+    public void atualizar(@PathVariable UUID uuid, @PathVariable String username, @RequestBody RachaUpdateRequest request) {
+        this.service.atualizar(uuid, username, request);
     }
 
-    @PatchMapping("/{uuid}/concluido")
+    @PatchMapping("/{uuid}/{username}/concluido")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void marcarComoIndisponivel(@PathVariable UUID uuid) {
-        this.service.marcarIndisponivel(uuid);
+    public void marcarComoIndisponivel(@PathVariable UUID uuid, @PathVariable String username) {
+        this.service.marcarIndisponivel(uuid, username);
     }
 
-    @PatchMapping("/{uuid}/jogadores/{username}")
+    @PatchMapping("/{uuid}/{username}/jogadores/{novoJogador}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void adicionarJogador(@PathVariable UUID uuid, @PathVariable String username) {
-        this.service.atribuirJogador(uuid, username);
+    public void adicionarJogador(@PathVariable UUID uuid, @PathVariable String username, @PathVariable String novoJogador) {
+        this.service.atribuirJogador(uuid, username, novoJogador);
     }
 
-    @PatchMapping("/{uuid}/partidas/{numero}")
+    @PatchMapping("/{uuid}/jogadores/{username}/entrar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void adicionarPartida(@PathVariable UUID uuid, @PathVariable int numero) {
-        this.service.atribuirPartida(uuid, numero);
+    public void entrarJogador(@PathVariable UUID uuid, @PathVariable String username) {
+        this.service.entrarJogador(uuid, username);
+    }
+
+    @PatchMapping("/{uuid}/{username}/partidas/{numero}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void adicionarPartida(@PathVariable UUID uuid, @PathVariable String username, @PathVariable int numero) {
+        this.service.atribuirPartida(uuid, username, numero);
     }
 
     @Transactional
