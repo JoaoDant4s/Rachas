@@ -33,7 +33,7 @@ INSERT INTO racha (uuid, localizacao, clima, data, quantidade_maxima, quantidade
                    avaliacao_minima, duracao, dono_da_bola, prioridade)
 VALUES ('123e4567-e89b-12d3-a456-426614174000', 'São Paulo, SP', 'Ensolarado', '2024-04-30', 20, 10, true, 'Futebol', 3,
         '15h - 17h', 'Carlos Eduardo', 'ALTA'),
-       ('123e4567-e89b-12d3-a456-426614174001', 'Rio de Janeiro, RJ', 'Chuvoso', '2024-05-05', 15, 15, true, 'Vôlei',
+       ('123e4567-e89b-12d3-a456-426614174001', 'Rio de Janeiro, RJ', 'Chuvoso', '2024-05-05', 15, 14, true, 'Vôlei',
         2, '17h - 19h', 'Maria Fernanda', 'MEDIA');
 
 

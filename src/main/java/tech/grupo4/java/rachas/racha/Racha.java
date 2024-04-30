@@ -35,8 +35,6 @@ public class Racha {
     private int avaliacaoMinima;
     private String duracao;
     private String donoDaBola;
-    @Enumerated(EnumType.STRING)
-    private PrioridadeEnum prioridade;
 
     @ToString.Exclude
     @ManyToMany
@@ -48,11 +46,4 @@ public class Racha {
     @ToString.Exclude
     @OneToMany(mappedBy = "racha", orphanRemoval = true)
     private List<Partida> partidas = new ArrayList<>();
-
-    public enum PrioridadeEnum {
-        ALTA,
-        MEDIA,
-        BAIXA
-    }
-
 }

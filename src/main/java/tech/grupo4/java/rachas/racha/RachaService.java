@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import tech.grupo4.java.rachas.exception.*;
 import tech.grupo4.java.rachas.partida.*;
 import tech.grupo4.java.rachas.model.*;
-import tech.grupo4.java.rachas.racha.Racha.PrioridadeEnum;
 import tech.grupo4.java.rachas.repository.JogadorRepository;
 
 import org.modelmapper.ModelMapper;
@@ -29,6 +28,7 @@ public class RachaService {
 
     public List<RachaDto> listar() {
         return this.repository.findAll().stream()
+                .filter(Racha::isDisponivel)
                 .map(this::convertToRachaDto)
                 .collect(Collectors.toList());
     }
@@ -46,7 +46,6 @@ public class RachaService {
         dto.setAvaliacaoMinima(racha.getAvaliacaoMinima());
         dto.setDuracao(racha.getDuracao());
         dto.setDonoDaBola(racha.getDonoDaBola());
-        dto.setPrioridade(racha.getPrioridade());
 
         dto.setJogadores(racha.getJogadores() != null ? racha.getJogadores().stream()
                 .map(Jogador::getNome)
@@ -78,6 +77,7 @@ public class RachaService {
 
     public List<RachaDto> buscarPorEsporte(String esporte) {
         return this.repository.findByEsporte(esporte).stream()
+                .filter(Racha::isDisponivel)
                 .map(this::convertToRachaDto)
                 .toList();
     }
@@ -86,7 +86,8 @@ public class RachaService {
         Racha todoItem = this.modelMapper.map(request, Racha.class);
         todoItem.setUuid(UUID.randomUUID());
         todoItem.setDisponivel(true);
-        todoItem.setPrioridade(PrioridadeEnum.BAIXA);
+        todoItem.setQuantidadeAtual(0);
+        todoItem.setQuantidadeMaxima(10);
         Racha novoRacha = this.repository.save(todoItem);
         return this.modelMapper.map(novoRacha, RachaDto.class);
     }
@@ -103,14 +104,21 @@ public class RachaService {
     }
 
     @Transactional
-    public void excluir(UUID uuid) {
-        this.repository.deleteByUuid(uuid);
+    public void excluir(UUID uuid, String username) {
+        Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
+        Jogador jogador = this.jogadorRepository.findByUsername(username).orElseThrow(JogadorNaoEncontradoException::new);
+        if (racha.getDonoDaBola().equals(jogador.getUsername()))
+            this.repository.deleteByUuid(uuid);
     }
 
     public void atribuirJogador(UUID uuid, String username) {
         Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
         Jogador jogador = this.jogadorRepository.findByUsername(username).orElseThrow(JogadorNaoEncontradoException::new);
         racha.getJogadores().add(jogador);
+        racha.setQuantidadeAtual(racha.getQuantidadeAtual() + 1);
+        if (racha.getQuantidadeAtual() >= racha.getQuantidadeMaxima()) {
+            racha.setDisponivel(false);
+        }
         this.repository.save(racha);
     }
 
