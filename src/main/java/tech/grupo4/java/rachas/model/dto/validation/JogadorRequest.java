@@ -1,6 +1,5 @@
-package tech.grupo4.java.rachas.model;
+package tech.grupo4.java.rachas.model.dto.validation;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;

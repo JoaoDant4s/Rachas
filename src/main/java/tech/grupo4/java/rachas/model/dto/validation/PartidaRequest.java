@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.partida;
+package tech.grupo4.java.rachas.model.dto.validation;
 
 import java.io.Serializable;
 import lombok.*;

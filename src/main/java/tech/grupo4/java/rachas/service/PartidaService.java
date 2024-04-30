@@ -1,12 +1,15 @@
-package tech.grupo4.java.rachas.partida;
+package tech.grupo4.java.rachas.service;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.grupo4.java.rachas.exception.*;
+import tech.grupo4.java.rachas.model.Partida;
+import tech.grupo4.java.rachas.model.dto.PartidaDto;
+import tech.grupo4.java.rachas.model.dto.validation.PartidaRequest;
+import tech.grupo4.java.rachas.repository.PartidaRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +17,6 @@ public class PartidaService {
 
     private final PartidaRepository repository;
     private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
 
     public List<PartidaDto> listarTodos() {
         return this.repository.findAll().stream()

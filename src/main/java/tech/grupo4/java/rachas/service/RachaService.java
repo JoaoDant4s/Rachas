@@ -1,6 +1,4 @@
-package tech.grupo4.java.rachas.racha;
-
-import jakarta.transaction.Transactional;
+package tech.grupo4.java.rachas.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +6,24 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import lombok.RequiredArgsConstructor;
-import tech.grupo4.java.rachas.exception.*;
-import tech.grupo4.java.rachas.partida.*;
-import tech.grupo4.java.rachas.model.*;
-import tech.grupo4.java.rachas.repository.JogadorRepository;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import tech.grupo4.java.rachas.exception.JogadorNaoEncontradoException;
+import tech.grupo4.java.rachas.exception.PartidaNaoEncontradoException;
+import tech.grupo4.java.rachas.exception.PermissaoInvalidaException;
+import tech.grupo4.java.rachas.exception.RachaNaoEncontradoException;
+import tech.grupo4.java.rachas.model.Jogador;
+import tech.grupo4.java.rachas.model.Partida;
+import tech.grupo4.java.rachas.model.Racha;
+import tech.grupo4.java.rachas.model.dto.RachaDto;
+import tech.grupo4.java.rachas.model.dto.validation.RachaRequest;
+import tech.grupo4.java.rachas.model.dto.validation.RachaUpdateRequest;
+import tech.grupo4.java.rachas.repository.JogadorRepository;
+import tech.grupo4.java.rachas.repository.PartidaRepository;
+import tech.grupo4.java.rachas.repository.RachaRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +66,6 @@ public class RachaService {
         return dto;
     }
 
-
     public List<RachaDto> consultarPorDonoDaBola(String username) {
         return this.repository.findByDonoDaBolaContainingIgnoreCase(username).stream()
                 .map(this::convertToRachaDto)
@@ -96,7 +103,7 @@ public class RachaService {
 
         Racha existingRacha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
 
-        if (verificarDono(uuid, username)){
+        if (verificarDono(uuid, username)) {
             this.modelMapper.map(request, existingRacha);
             this.repository.save(existingRacha);
         }
@@ -126,7 +133,7 @@ public class RachaService {
     public void atribuirJogador(UUID uuid, String username2, String username) {
         Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
 
-        if (verificarDono(uuid, username2) && racha.isDisponivel()){
+        if (verificarDono(uuid, username2) && racha.isDisponivel()) {
             novoJogador(username, racha);
         }
 
@@ -137,7 +144,7 @@ public class RachaService {
     public void entrarJogador(UUID uuid, String username) {
         Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
 
-        if (racha.isDisponivel()){
+        if (racha.isDisponivel()) {
             novoJogador(username, racha);
         }
     }
@@ -145,8 +152,9 @@ public class RachaService {
     public void atribuirPartida(UUID uuid, String username, int numero) {
         Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
 
-        if (verificarDono(uuid, username)){
-            Partida partida = this.partidaRepository.findByNumero(numero).orElseThrow(PartidaNaoEncontradoException::new);
+        if (verificarDono(uuid, username)) {
+            Partida partida = this.partidaRepository.findByNumero(numero)
+                    .orElseThrow(PartidaNaoEncontradoException::new);
             partida.setRacha(racha);
             System.out.println(partida);
             racha.getPartidas().add(partida);
@@ -158,14 +166,16 @@ public class RachaService {
             throw new PermissaoInvalidaException();
     }
 
-    private boolean verificarDono(UUID uuid, String username){
+    private boolean verificarDono(UUID uuid, String username) {
         Racha racha = this.repository.findByUuid(uuid).orElseThrow(RachaNaoEncontradoException::new);
-        Jogador jogador = this.jogadorRepository.findByUsername(username).orElseThrow(JogadorNaoEncontradoException::new);
+        Jogador jogador = this.jogadorRepository.findByUsername(username)
+                .orElseThrow(JogadorNaoEncontradoException::new);
         return racha.getDonoDaBola().equals(jogador.getNome());
     }
 
-    private void novoJogador(String username, Racha racha){
-        Jogador jogador = this.jogadorRepository.findByUsername(username).orElseThrow(JogadorNaoEncontradoException::new);
+    private void novoJogador(String username, Racha racha) {
+        Jogador jogador = this.jogadorRepository.findByUsername(username)
+                .orElseThrow(JogadorNaoEncontradoException::new);
         racha.getJogadores().add(jogador);
         racha.setQuantidadeAtual(racha.getQuantidadeAtual() + 1);
         if (racha.getQuantidadeAtual() >= racha.getQuantidadeMaxima()) {

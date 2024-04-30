@@ -3,8 +3,8 @@ package tech.grupo4.java.rachas.controller;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import tech.grupo4.java.rachas.model.JogadorRequest;
 import tech.grupo4.java.rachas.model.dto.JogadorDto;
+import tech.grupo4.java.rachas.model.dto.validation.JogadorRequest;
 import tech.grupo4.java.rachas.service.JogadorService;
 
 import org.springframework.http.HttpStatus;

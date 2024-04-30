@@ -1,9 +1,14 @@
-package tech.grupo4.java.rachas.racha;
+package tech.grupo4.java.rachas.controller;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import tech.grupo4.java.rachas.model.dto.RachaDto;
+import tech.grupo4.java.rachas.model.dto.validation.RachaRequest;
+import tech.grupo4.java.rachas.model.dto.validation.RachaUpdateRequest;
+import tech.grupo4.java.rachas.service.RachaService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

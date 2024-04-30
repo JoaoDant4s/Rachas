@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.partida;
+package tech.grupo4.java.rachas.model.dto;
 
 import java.io.Serializable;
 
