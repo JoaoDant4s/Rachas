@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import tech.grupo4.java.rachas.model.openweather.WeatherResponse;
 
-@FeignClient(value = "openWeather")
+@FeignClient(value = "openWeather", url = "${open.weather.url}")
 public interface WeatherRepository {
     
     @GetMapping
-    WeatherResponse getAll(
+    WeatherResponse getWeatherInfoByLatAndLon(
         @RequestParam("lat") double latitude,
         @RequestParam("lon") double longitude,
         @RequestParam("appid") String apiKey
