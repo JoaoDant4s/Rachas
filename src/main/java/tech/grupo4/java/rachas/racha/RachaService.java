@@ -83,6 +83,9 @@ public class RachaService {
     }
 
     public RachaDto adicionar(RachaRequest request) {
+        Jogador donoDaBola = this.jogadorRepository.findByUsername(request.getDonoDaBola())
+                .orElseThrow(() -> new IllegalStateException("Jogador não encontrado"));
+
         Racha todoItem = this.modelMapper.map(request, Racha.class);
         todoItem.setUuid(UUID.randomUUID());
         todoItem.setDisponivel(true);
@@ -91,6 +94,7 @@ public class RachaService {
         Racha novoRacha = this.repository.save(todoItem);
         return this.modelMapper.map(novoRacha, RachaDto.class);
     }
+
 
     public void atualizar(UUID uuid, String username, RachaUpdateRequest request) {
 
