@@ -84,7 +84,7 @@
 
         public RachaDto adicionar(RachaRequest request) {
             Jogador donoDaBola = this.jogadorRepository.findByUsername(request.getDonoDaBola())
-                    .orElseThrow(() -> new IllegalStateException("Jogador não encontrado"));
+                    .orElseThrow(JogadorNaoEncontradoException::new);
 
             Racha todoItem = this.modelMapper.map(request, Racha.class);
             todoItem.setUuid(UUID.randomUUID());
@@ -104,27 +104,18 @@
                 this.modelMapper.map(request, existingRacha);
                 this.repository.save(existingRacha);
             }
-
-            else
-                throw new PermissaoInvalidaException();
         }
 
         @Transactional
         public void marcarIndisponivel(UUID uuid, String username) {
             if (verificarDono(uuid, username))
                 this.repository.marcarIndisponivel(uuid);
-
-            else
-                throw new PermissaoInvalidaException();
         }
 
         @Transactional
         public void excluir(UUID uuid, String username) {
             if (verificarDono(uuid, username))
                 this.repository.deleteByUuid(uuid);
-
-            else
-                throw new PermissaoInvalidaException();
         }
 
         public void atribuirJogador(UUID uuid, String username2, String username) {
@@ -134,8 +125,6 @@
                 novoJogador(username, racha);
             }
 
-            else
-                throw new PermissaoInvalidaException();
         }
 
         public void entrarJogador(UUID uuid, String username) {
@@ -158,8 +147,7 @@
                 this.repository.save(racha);
             }
 
-            else
-                throw new PermissaoInvalidaException();
+
         }
 
         private boolean verificarDono(UUID uuid, String username){
