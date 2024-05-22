@@ -9,6 +9,8 @@ public interface PartidaRepository extends JpaRepository<Partida, Integer> {
 
     Optional<Partida> findByNumero(int numero);
 
+    Partida save(Partida partida);
+
     void deleteByNumero(int numero);
 
 }
