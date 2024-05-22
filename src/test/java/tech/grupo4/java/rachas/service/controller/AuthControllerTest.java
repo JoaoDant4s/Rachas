@@ -33,7 +33,7 @@ public class AuthControllerTest {
     @MockBean
     private JogadorService jogadorService;
 
-    @SpyBean
+    @MockBean
     private AuthenticationManager authenticationManager;
 
     @MockBean
@@ -88,7 +88,8 @@ public class AuthControllerTest {
     @Test
     public void login_falha_autenticacao() throws Exception {
         Mockito.when(jogadorService.getByUsernameEntity(loginDto.username())).thenReturn(jogador);
-
+        Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class)))
+        .thenThrow(new BadCredentialsException("Invalid credentials"));
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -100,9 +101,9 @@ public class AuthControllerTest {
                                 """)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
-        .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+        .andExpect(MockMvcResultMatchers.status().isUnauthorized());
 
-        Mockito.verify(jogadorService, Mockito.times(2)).getByUsernameEntity(loginDto.username());
+        Mockito.verify(jogadorService, Mockito.times(1)).getByUsernameEntity(loginDto.username());
         Mockito.verify(authenticationManager, Mockito.times(1)).authenticate(Mockito.any(Authentication.class));
         Mockito.verify(jwtService, Mockito.never()).createToken(jogador);
     }
