@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +31,7 @@ public class RachaDto implements Serializable {
     private String esporte;
     private int avaliacaoMinima;
     private String duracao;
+    @NotNull
     private String donoDaBola;
     private List<String> jogadores = new ArrayList<>();
     private List<Integer> partidas = new ArrayList<>();

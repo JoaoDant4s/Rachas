@@ -1,14 +1,11 @@
 package tech.grupo4.java.rachas.racha;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech.grupo4.java.rachas.partida.Partida;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,5 +21,7 @@ public class RachaRequest implements Serializable {
     private String esporte;
     private int avaliacaoMinima;
     private String duracao;
+
+    @NotBlank(message = "O dono da bola é obrigatório")
     private String donoDaBola;
 }

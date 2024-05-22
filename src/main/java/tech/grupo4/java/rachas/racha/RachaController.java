@@ -1,6 +1,7 @@
 package tech.grupo4.java.rachas.racha;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,8 @@ public class RachaController {
     }
 
     @PostMapping
-    public RachaDto adicionar(@RequestBody RachaRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public RachaDto adicionar(@Valid @RequestBody RachaRequest request) {
         return this.service.adicionar(request);
     }
 
@@ -74,5 +76,4 @@ public class RachaController {
     public void excluir(@PathVariable UUID uuid, @PathVariable String username) {
         this.service.excluir(uuid, username);
     }
-
 }
