@@ -5,6 +5,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tech.grupo4.java.rachas.exception.JogadorNaoEncontradoException;
+import tech.grupo4.java.rachas.exception.PartidaNaoEncontradoException;
+import tech.grupo4.java.rachas.exception.RachaNaoEncontradoException;
 import tech.grupo4.java.rachas.model.Jogador;
 import tech.grupo4.java.rachas.racha.RachaRepository;
 import tech.grupo4.java.rachas.racha.RachaRequest;
@@ -12,6 +15,9 @@ import tech.grupo4.java.rachas.racha.RachaService;
 import tech.grupo4.java.rachas.repository.JogadorRepository;
 
 import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -56,9 +62,16 @@ public class RachaServiceUnitTest {
         teste.setDonoDaBola(jogador.getUsername());
 
         Assertions.assertThrows(
-                IllegalStateException.class,
+                JogadorNaoEncontradoException.class,
                 () -> rachaService.adicionar(teste)
         );
     }
 
+    @Test
+    public void buscarPorUUIDNaoEncontrado_deveLancarExcecao() {
+        UUID invalidUuid = UUID.randomUUID();
+        Mockito.when(rachaRepository.findByUuid(invalidUuid)).thenReturn(Optional.empty());
+
+        assertThrows(RachaNaoEncontradoException.class, () -> rachaService.buscarPorUuid(invalidUuid));
+    }
 }

@@ -55,7 +55,7 @@ public class RachaControllerIntegrationTest {
     @Test
     @Order(2)
     public void update_Racha_shouldUpdateSuccessfully() throws Exception {
-        // Primeiro, crie um jogador para ser o dono da bola
+
         String jogadorUsername = "jogador_teste";
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/jogadores")
@@ -73,7 +73,7 @@ public class RachaControllerIntegrationTest {
                 MockMvcResultMatchers.status().isCreated()
         );
 
-        // Crie um racha
+
         String rachaJson = mockMvc.perform(
                 MockMvcRequestBuilders.post("/rachas")
                         .content("""
@@ -95,10 +95,10 @@ public class RachaControllerIntegrationTest {
                 MockMvcResultMatchers.status().isCreated()
         ).andReturn().getResponse().getContentAsString();
 
-        // Extraia o UUID do racha criado
+
         UUID rachaUuid = UUID.fromString(rachaJson.split("\"uuid\":\"")[1].split("\"")[0]);
 
-        // Dados para a atualização
+
         String updatedLocation = "Local Atualizado";
         String updateRequestJson = """
                 {
@@ -116,7 +116,7 @@ public class RachaControllerIntegrationTest {
                 }
                 """.formatted(rachaUuid);
 
-        // Realize a atualização
+
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/rachas/" + rachaUuid + "/" + jogadorUsername)
                         .content(updateRequestJson)
@@ -128,7 +128,10 @@ public class RachaControllerIntegrationTest {
                 MockMvcResultMatchers.status().isNoContent()
         );
 
-        // Verifique se o serviço foi chamado
+
         Mockito.verify(rachaService, Mockito.times(1)).atualizar(Mockito.eq(rachaUuid), Mockito.eq(jogadorUsername), Mockito.any());
     }
+
+
 }
+
