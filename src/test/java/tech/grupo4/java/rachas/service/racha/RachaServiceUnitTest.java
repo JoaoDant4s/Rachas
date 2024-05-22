@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.service;
+package tech.grupo4.java.rachas.service.racha;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

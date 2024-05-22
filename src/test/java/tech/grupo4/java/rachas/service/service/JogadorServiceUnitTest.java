@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.service;
+package tech.grupo4.java.rachas.service.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,7 @@ import tech.grupo4.java.rachas.model.Jogador;
 import tech.grupo4.java.rachas.model.JogadorRequest;
 import tech.grupo4.java.rachas.model.dto.JogadorDto;
 import tech.grupo4.java.rachas.repository.JogadorRepository;
+import tech.grupo4.java.rachas.service.JogadorService;
 
 import static org.junit.jupiter.api.Assertions.*;
 

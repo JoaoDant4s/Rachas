@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.service;
+package tech.grupo4.java.rachas.service.controller;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import tech.grupo4.java.rachas.service.JogadorService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
