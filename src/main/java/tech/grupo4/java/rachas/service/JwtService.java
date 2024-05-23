@@ -20,8 +20,11 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-    @Value("${security.jwt.token.secret-key}")
     private String secret;
+
+    public JwtService(@Value("${security.jwt.token.secret-key}") String secret) {
+        this.secret = secret;
+    }
 
     public String createToken(UserDetails userDetails) {
         final var now = LocalDateTime.now();
