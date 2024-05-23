@@ -4,8 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import tech.grupo4.java.rachas.model.JogadorRequest;
 import tech.grupo4.java.rachas.model.dto.JogadorDto;
+import tech.grupo4.java.rachas.model.dto.validation.JogadorRequest;
 import tech.grupo4.java.rachas.service.JogadorService;
 
 import java.util.List;

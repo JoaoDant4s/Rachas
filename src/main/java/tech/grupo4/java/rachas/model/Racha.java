@@ -1,8 +1,7 @@
-package tech.grupo4.java.rachas.racha;
+package tech.grupo4.java.rachas.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import lombok.AllArgsConstructor;
@@ -10,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import tech.grupo4.java.rachas.model.Jogador;
-import tech.grupo4.java.rachas.partida.Partida;
 
 @NoArgsConstructor
 @AllArgsConstructor

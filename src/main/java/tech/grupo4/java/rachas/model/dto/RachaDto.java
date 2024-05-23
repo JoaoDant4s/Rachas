@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.racha;
+package tech.grupo4.java.rachas.model.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,7 +12,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech.grupo4.java.rachas.model.dto.JogadorDto;
 
 @NoArgsConstructor
 @AllArgsConstructor

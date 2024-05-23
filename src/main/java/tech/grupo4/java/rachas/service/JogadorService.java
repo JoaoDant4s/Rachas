@@ -2,11 +2,10 @@ package tech.grupo4.java.rachas.service;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import tech.grupo4.java.rachas.exception.JogadorNaoEncontradoException;
 import tech.grupo4.java.rachas.model.Jogador;
-import tech.grupo4.java.rachas.model.JogadorRequest;
 import tech.grupo4.java.rachas.model.dto.JogadorDto;
+import tech.grupo4.java.rachas.model.dto.validation.JogadorRequest;
 import tech.grupo4.java.rachas.repository.JogadorRepository;
 
 import org.modelmapper.ModelMapper;

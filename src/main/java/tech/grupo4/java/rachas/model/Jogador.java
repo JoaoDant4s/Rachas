@@ -8,7 +8,6 @@ import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tech.grupo4.java.rachas.racha.Racha;
 
 @NoArgsConstructor
 @AllArgsConstructor

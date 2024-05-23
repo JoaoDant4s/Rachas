@@ -1,8 +1,7 @@
-package tech.grupo4.java.rachas.partida;
+package tech.grupo4.java.rachas.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import tech.grupo4.java.rachas.racha.Racha;
 
 @NoArgsConstructor
 @AllArgsConstructor

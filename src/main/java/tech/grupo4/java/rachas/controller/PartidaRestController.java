@@ -1,8 +1,12 @@
-package tech.grupo4.java.rachas.partida;
+package tech.grupo4.java.rachas.controller;
 
 import jakarta.validation.Valid;
 import java.util.*;
 import lombok.RequiredArgsConstructor;
+import tech.grupo4.java.rachas.model.dto.PartidaDto;
+import tech.grupo4.java.rachas.model.dto.validation.PartidaRequest;
+import tech.grupo4.java.rachas.service.PartidaService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
