@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.service.controller;
+package tech.grupo4.java.rachas.service.partida;
 
 import java.util.List;
 import java.util.Optional;

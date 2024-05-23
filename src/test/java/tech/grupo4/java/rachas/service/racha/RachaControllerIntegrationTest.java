@@ -134,6 +134,66 @@ public class RachaControllerIntegrationTest {
         Mockito.verify(rachaService, Mockito.times(1)).atualizar(Mockito.eq(rachaUuid), Mockito.eq(jogadorUsername), Mockito.any());
     }
 
+    @Test
+    @Order(3)
+    public void consultarPorDonoDaBola_deveRetornarRachas() throws Exception {
+        String jogadorUsername = "jogador_teste";
 
+        // Adicionar mais rachas
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/rachas")
+                        .content("""
+                                {
+                                    "localizacao": "Local Teste 1",
+                                    "clima": "Clima Teste 1",
+                                    "data": "Data Teste 1",
+                                    "quantidadeMaxima": 10,
+                                    "quantidadeAtual": 0,
+                                    "esporte": "Esporte Teste 1",
+                                    "avaliacaoMinima": 1,
+                                    "duracao": "Duracao Teste 1",
+                                    "donoDaBola": "jogador_teste"
+                                }
+                                """)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isCreated()
+        );
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/rachas")
+                        .content("""
+                                {
+                                    "localizacao": "Local Teste 2",
+                                    "clima": "Clima Teste 2",
+                                    "data": "Data Teste 2",
+                                    "quantidadeMaxima": 10,
+                                    "quantidadeAtual": 0,
+                                    "esporte": "Esporte Teste 2",
+                                    "avaliacaoMinima": 1,
+                                    "duracao": "Duracao Teste 2",
+                                    "donoDaBola": "jogador_teste"
+                                }
+                                """)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isCreated()
+        );
+
+        // Consultar rachas por dono da bola
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/rachas/consultar?Dono=" + jogadorUsername)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+                MockMvcResultHandlers.print()
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.length()").value(3)
+        );
+
+    }
 }
 
