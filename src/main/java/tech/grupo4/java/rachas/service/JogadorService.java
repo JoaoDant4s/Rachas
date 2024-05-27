@@ -1,7 +1,12 @@
 package tech.grupo4.java.rachas.service;
 
+import java.util.Collections;
+
 import jakarta.transaction.Transactional;
+
 import java.util.List;
+import java.util.stream.Collectors;
+
 import tech.grupo4.java.rachas.exception.JogadorNaoEncontradoException;
 import tech.grupo4.java.rachas.model.Jogador;
 import tech.grupo4.java.rachas.model.JogadorRequest;
@@ -19,7 +24,6 @@ public class JogadorService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-
     public JogadorService(JogadorRepository repository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.modelMapper = modelMapper;
@@ -27,10 +31,15 @@ public class JogadorService {
     }
 
     public List<JogadorDto> listarTodos() {
-        return this.repository.findAll().stream()
+        List<Jogador> jogadores = this.repository.findAll();
+        List<JogadorDto> jogadorDtos = jogadores.stream()
                 .map(jogador -> this.modelMapper.map(jogador, JogadorDto.class))
-                .toList()
-                .reversed();
+                .collect(Collectors.toList());
+
+        Collections.reverse(jogadorDtos);
+
+        return jogadorDtos;
+
     }
 
     public JogadorDto buscarPorLogin(String username) {

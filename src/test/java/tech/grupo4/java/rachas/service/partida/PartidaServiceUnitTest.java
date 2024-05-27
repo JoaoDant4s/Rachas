@@ -1,4 +1,4 @@
-package tech.grupo4.java.rachas.service.service;
+package tech.grupo4.java.rachas.service.partida;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
