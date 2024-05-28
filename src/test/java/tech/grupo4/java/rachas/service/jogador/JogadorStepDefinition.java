@@ -1,5 +1,6 @@
 package tech.grupo4.java.rachas.service.jogador;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.cucumber.java.en.Given;
@@ -24,6 +25,8 @@ public class JogadorStepDefinition {
         jogadorReq.setNome("joao");
         jogadorReq.setUsername("joao.dantas");
         jogadorReq.setPassword("Qw3@Vp8x$eR7nB#1mZ");
+
+        response = request.when().delete("/jogadores/joao.dantas");
     }
 
     @Given("jogador sem o atributo username")
@@ -33,6 +36,14 @@ public class JogadorStepDefinition {
         jogadorReq.setPassword("Qw3@Vp8x$eR7nB#1mZ");
     }
 
+    @Given("um jogdor existente com username valido")
+    public void jogadorExistenteComUsernameValido() {
+        // Assegure-se de que o jogador existe no banco de dados antes de buscá-lo
+        jogadorNotExist();
+        response = request.body(jogadorReq).when().post("/jogadores");
+        assertEquals(201, response.getStatusCode(), "Erro ao criar jogador: " + response.getBody().asString());
+    }
+
     @When("cadastro o jogador")
     public void registerJogador() {
         response = request.body(jogadorReq).when().post("/jogadores");
@@ -40,21 +51,28 @@ public class JogadorStepDefinition {
 
     @When("cadastro o jogador sem username")
     public void registerJogadorWithoutName() {
-        jogadorReq = new JogadorRequest();
-        jogadorReq.setNome("joao");
-        jogadorReq.setPassword("Qw3@Vp8x$eR7nB#1mZ");
         response = request.body(jogadorReq).when().post("/jogadores");
+    }
+
+    @When("busco o jogador por username")
+    public void buscoOJogadorPorUsername() {
+        response = request.when().get("/jogadores/joao.dantas");
     }
 
     @Then("encontro o jogador cadastrado")
     public void searchJogador() {
-        var response = request.pathParam("username", "joao.dantas").when().get("/{username}");
-        String name = response.jsonPath().get("$.[0].username");
+        response = request.pathParam("username", "joao.dantas").when().get("/jogadores/{username}");
+        String name = response.jsonPath().getString("username");
         assertEquals("joao.dantas", name);
     }
 
-    @Then("erro no cadastro {int}")
+    @Then("erro no cadastro do jogador {int}")
     public void error400(Integer status) {
-        assertEquals(status, response.getStatusCode());
+        assertEquals(status.intValue(), response.getStatusCode());
+    }
+
+    @Then("o jogador é retornado com sucesso")
+    public void jogadorRetornadoComSucesso() {
+        assertEquals(200, response.getStatusCode());
     }
 }

@@ -32,7 +32,9 @@ public class PartidaStepDefinition {
 
     @Given("uma partida existente com número válido")
     public void partidaExistenteComNumeroValido() {
-        response = given().when().get("/partidas/1");
+        novaPartidaASerAdicionada();
+        response = request.body(partidaReq).when().post("/partidas");
+        assertEquals(201, response.getStatusCode());
     }
 
     @Given("uma nova partida sem número")
@@ -64,8 +66,8 @@ public class PartidaStepDefinition {
         assertEquals(200, response.getStatusCode());
     }
 
-    @Then("erro no cadastro {int}")
+    @Then("erro no cadastro da partida {int}")
     public void erroNoCadastro(Integer status) {
-        assertEquals(status, response.getStatusCode());
+        assertEquals(status.intValue(), response.getStatusCode());
     }
 }

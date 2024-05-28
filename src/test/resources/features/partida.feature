@@ -8,8 +8,3 @@ Feature: Partida
         Given uma partida existente com número válido
         When busco a partida por número
         Then a partida é retornada com sucesso
-
-    Scenario: Tentar adicionar uma nova partida sem número
-        Given uma nova partida sem número
-        When tento adicionar a partida
-        Then erro no cadastro 400

@@ -29,7 +29,14 @@ public class PartidaService {
     }
 
     public PartidaDto adicionarPartida(PartidaRequest request) {
+        List<PartidaDto> lista = listarTodos();
+        int i = 1;
+        for(PartidaDto l : lista)
+            if (request.getNumero() == l.getNumero())
+                i += 1;
+
         Partida partida = modelMapper.map(request, Partida.class);
+        partida.setNumero(i);
         Partida novoPartida = repository.save(partida);
         return modelMapper.map(novoPartida, PartidaDto.class);
     }

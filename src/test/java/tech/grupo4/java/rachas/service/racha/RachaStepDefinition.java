@@ -30,7 +30,7 @@ public class RachaStepDefinition {
         rachaReq.setEsporte("Esporte");
         rachaReq.setAvaliacaoMinima(5);
         rachaReq.setDuracao("Duracao");
-        rachaReq.setDonoDaBola("Dono");
+        rachaReq.setDonoDaBola("tiago.santos");
     }
 
     @Given("um racha existente com UUID válido")
@@ -51,14 +51,14 @@ public class RachaStepDefinition {
         rachaReq.setDonoDaBola("Dono");
     }
 
-    @When("eu adiciono o racha")
+    @When("cadastro o racha")
     public void adicionoORacha() {
         response = request.body(rachaReq).when().post("/rachas");
     }
 
-    @When("eu busco o racha por UUID")
+    @When("busco o racha por UUID")
     public void buscoORachaPorUUID() {
-        // response = given().when().get("/rachas/{uuid}");
+        response = given().when().get("/rachas/123e4567-e89b-12d3-a456-426614174000");
     }
 
     @Then("o racha é adicionado com sucesso")
@@ -71,7 +71,7 @@ public class RachaStepDefinition {
         assertEquals(200, response.getStatusCode());
     }
 
-    @Then("erro no cadastro {int}")
+    @Then("erro no cadastro do racha {int}")
     public void erroNoCadastro(Integer status) {
         assertEquals(status, response.getStatusCode());
     }
